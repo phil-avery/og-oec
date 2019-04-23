@@ -1,0 +1,33 @@
+---
+- name: Setup Edge Connector for Ansible
+  hosts: edge
+  tasks:
+  - name: Install Edge Connector
+    yum:
+      name: https://s3-us-west-2.amazonaws.com/opsgeniedownloads/repo/oec-1.0.1.beta-1.x86_64.rpm
+      state: present
+      
+  - name: Install Epel
+    yum:
+      name: epel-release
+      state: latest
+
+  - name: Install pip
+    yum: 
+      name: python2-pip
+      state: present
+
+  - name: Install python devel package
+    yum:
+      name: python-devel
+      state: present
+
+  - name: Install Ansible via pip
+    pip:
+      name: ansible
+      umask: "0022"
+
+  - name: Install ansible-runner 
+    pip:
+      name: ansible-runner
+      umask: "0022"
