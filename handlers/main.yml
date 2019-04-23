@@ -1,6 +1,10 @@
 ---
 - name: restart edge
-  service: name=oec state=restarted
+  service: 
+    name: oec 
+    state: restarted
 
 - name: reload edge
-  service: name=edge state=reloaded
+  service: 
+    name: edge 
+    state: reloaded
