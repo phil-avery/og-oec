@@ -13,16 +13,13 @@
 - include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
-# Vhost configuration.
-- import_tasks: vhosts.yml
-
-# Nginx setup.
+# opsgenie setup.
 - name: Copy oec configuration in place.
   template:
     src: "{{ oec_conf_template }}"
     dest: "{{ oec_conf_file_path }}"
-    owner: root
-    group: "{{ root_group }}"
+    owner: opsgenie
+    group: opsgenie
     mode: 0644
   notify:
     - reload edge
