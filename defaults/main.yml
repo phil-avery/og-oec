@@ -1,0 +1,29 @@
+---
+# defaults file for oec
+oec_conf_source_type: local
+oec_svc_env_template: svc_env.j2
+oec_conf_local_filepath: /etc/opsgenie/
+oec_svc_env_file: oec.env
+oec_conf_template: oecconfig.yml.j2
+oec_conf_file_path: /etc/opsgenie/
+oec_conf_file: oecconfig.yml
+__oec_user: opsgenie
+oec_group: opsgenie
+__oec_svc_name: oec
+oec_svc_path: /etc/systemd/system/
+oec_svc_template: svc.j2
+
+### oec_config_file ###
+conf_baseUrl: https://api.opsgenie.com
+conf_logLevel: info
+conf_poller_wait: 100
+conf_poller_Timeout: 30
+conf_poller_maxmsgs: 10
+conf_pool_max_workers: 12
+conf_pool_min_workers: 4
+conf_pool_queueSize: 0
+conf_pool_keepalive: 6000
+conf_pool_monitoring_period: 15000
+...
+
+#

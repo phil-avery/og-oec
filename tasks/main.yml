@@ -1,28 +1,67 @@
 ---
-# Variable setup.
+# tasks file for oec
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Define oec_user.
+  set_fact:
+    oec_user: "{{ __oec_user }}"
+  when: oec_user is not defined
+
+- name: Define oec_svc_name.
+  set_fact:
+    oec_svc_name: "{{ __oec_svc_name }}"
+  when: oec_svc_name is not defined
+
 # Setup/install tasks.
-- include_tasks: setup-RedHat.yml
+- name: Include EL based tasks
+  include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
-- include_tasks: setup-Ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
-
-- include_tasks: setup-Debian.yml
+- name: Include Debian based tasks
+  include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
-# opsgenie setup.
+# OEC Config setup.
+- name: create oec folder
+  file:
+    path: "{{ oec_conf_file_path }}"
+    state: directory
+    owner: "{{ oec_user }}"
+    group: "{{ oec_group }}"
+
+- name: copy oec environment file in place
+  template:
+    src: "{{ oec_svc_env_template }}"
+    dest: "{{ oec_conf_file_path }}{{ oec_svc_env_file }}"
+    owner: "{{ oec_user }}"
+    group: "{{ oec_group }}"
+    mode: 0644
+  notify:
+    - restart oec
+
+- name: copy oec service file in place
+  template:
+    src: "{{ oec_svc_template }}"
+    dest: "{{ oec_svc_path }}{{ oec_svc_name }}.service"
+    owner: root
+    group: root
+    mode: 0755
+  notify:
+    - restart oec
+
 - name: Copy oec configuration in place.
   template:
     src: "{{ oec_conf_template }}"
-    dest: "{{ oec_conf_file_path }}"
-    owner: opsgenie
-    group: opsgenie
+    dest: "{{ oec_conf_file_path }}{{ oec_conf_file }}"
+    owner: "{{ oec_user }}"
+    group: "{{ oec_group }}"
     mode: 0644
   notify:
-    - reload edge
+    - restart oec
 
-- name: Ensure Edge Connector is started and enabled to start at boot.
-  service: name=oec state=started enabled=yes
+- name: Ensure oec is started and enabled to start at boot.
+  service:
+    name: "{{ oec_svc_name }}"
+    state: started
+    enabled: yes

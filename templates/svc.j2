@@ -1,0 +1,12 @@
+[Unit]
+Description=Opsgenie Edge Connector - {{ oec_svc_name }} (OEC)
+
+[Service]
+Group={{ oec_user }}
+User={{ oec_group }}
+Type=simple
+ExecStart=/usr/local/bin/OpsgenieEdgeConnector
+EnvironmentFile={{ oec_conf_file_path }}{{ oec_svc_env_file }}
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,4 @@
+---
+- name: Install OEC
+  apt:
+    deb: "{{ oec_package }}"

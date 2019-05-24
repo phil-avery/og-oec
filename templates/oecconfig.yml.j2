@@ -1,0 +1,73 @@
+---
+appName: {{ conf_appName }}
+apiKey: {{ conf_apiKey }}
+baseUrl: {{ conf_baseUrl }}
+logLevel: {{ conf_logLevel }}
+{% if conf_globalArgs is defined %}
+globalArgs:
+{% for item in conf_globalArgs.args %}
+- {{ item.key }}={{ item.value }}
+{% endfor %}
+{% endif %}
+{% if conf_globalFlag is defined %}
+globalFlags:
+{% for item in conf_globalFlag.flags %}
+  {{ item.key }}: {{ item.value }}
+{% endfor %}
+{% endif %}
+{% if conf_globalEnv is defined %}
+globalEnv:
+{% for item in conf_globalEnv.env %}
+- {{ item.key }}={{ item.value }}
+{% endfor %}
+{% endif %}
+actionMappings:
+{% for item in conf_actions %}
+  {{ item.name }}:
+    sourceType: {{ item.sourceType }}
+    filepath: {{ item.filepath }}
+{% if item.sourceType == "git" %}
+    gitOptions:
+      url: {{ item.giturl }}
+{% if item.gitprvkey is defined %}
+      privatekeyFilepath: {{ item.gitprvkey }}
+{% endif %}
+{% if item.gitpassphrase is defined %}
+      passphrase: {{ item.gitpassphrase }}
+{% endif %}
+{% endif %}
+{% if item.args is defined %}
+    args:
+{% for item in item.args %}
+    - {{ item.key }}={{ item.value }}
+{% endfor %}
+{% endif %}
+{% if item.flags is defined %}
+    flags:
+{% for item in item.flags %}
+      {{ item.key }}: {{ item.value }}
+{% endfor %}
+{% endif %}
+{% if item.env is defined %}
+    env:
+{% for item in item.env %}
+    - {{ item.key }}={{ item.value }}
+{% endfor %}
+{% endif %}
+{% if item.stdout is defined %}
+    stdout:
+{% endif %}
+{% if item.stderr is defined %}
+    stderr:
+{% endif %}
+{% endfor %}
+pollerConf:
+  pollingWaitIntervalInMillis: {{ conf_poller_wait }}
+  visibilityTimeoutInSeconds: {{ conf_poller_Timeout }}
+  maxNumberOfMessages: {{ conf_poller_maxmsgs }}
+poolConf:
+  maxNumberOfWorker: {{ conf_pool_max_workers }}
+  minNumberOfWorker: {{ conf_pool_min_workers }}
+  queueSize: {{ conf_pool_queueSize }}
+  keepAliveTimeInMillis: {{ conf_pool_keepalive }}
+  monitoringPeriodInMillis: {{ conf_pool_monitoring_period }}
