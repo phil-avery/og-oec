@@ -22,12 +22,15 @@ Role Variables
 Available variables are listed below, along with default values (see defaults/main.yml):
 
 ### MINIMUM REQUIRED TO RUN ###
+```
 conf_apiKey: < Your Opsgenie Integration API Key > 
 conf_actions:
   - name: <Action Name>
     sourceType: local
     filepath: <Path to your script>
+```
 OR IF USING GIT
+```
 conf_apiKey: < Your Opsgenie Integration API Key > 
 conf_actions:
   - name: <Action Name>
@@ -36,9 +39,9 @@ conf_actions:
     giturl: https://github.com/repo/name.git
     gitprvkey: Git Private Key
     gitpassphrase: Git Pass Phrase
-    
+```    
 ### OEC Service Variables ###
-
+```
 oec_conf_source_type: local
 oec_conf_local_filepath: /etc/opsgenie/
 oec_conf_template: oecconfig.yml.j2
@@ -51,9 +54,9 @@ oec_svc_path: /etc/systemd/system/
 oec_svc_template: svc.j2
 oec_svc_env_template: svc_env.j2
 oec_svc_env_file: oec.env
-
+```
 ### Global Config Variables ###
-
+```
 conf_appName: OEC
 conf_baseUrl: https://api.opsgenie.com
 conf_logLevel: info
@@ -81,8 +84,9 @@ conf_globalEnv:
       value: value1
     - key: key2
       value: value2
-
+```
 ### Action Mapping Variables ###
+```
 conf_actions:
   - name: <Action Name>
     sourceType: local
@@ -102,8 +106,9 @@ conf_actions:
         value: value2
     stdout: '/var/log/customaction.log'
     stderr: '/var/log/customaction_err.log'
-    
+```    
 ### Custom Action from Git Source ###
+```
 conf_actions:
   - name: <Action Name>
     sourceType: git
@@ -126,7 +131,7 @@ conf_actions:
         value: value2
     stdout: '/var/log/customaction.log'
     stderr: '/var/log/customaction_err.log'
-    
+```    
 Dependencies
 ------------
 
