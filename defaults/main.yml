@@ -14,6 +14,7 @@ oec_svc_path: /etc/systemd/system/
 oec_svc_template: svc.j2
 
 ### oec_config_file ###
+conf_appName: OEC
 conf_baseUrl: https://api.opsgenie.com
 conf_logLevel: info
 conf_poller_wait: 100
