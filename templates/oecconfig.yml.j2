@@ -6,7 +6,7 @@ logLevel: {{ conf_logLevel }}
 {% if conf_globalArgs is defined %}
 globalArgs:
 {% for item in conf_globalArgs.args %}
-- {{ item.key }}={{ item.value }}
+- {{ item }}
 {% endfor %}
 {% endif %}
 {% if conf_globalFlag is defined %}
@@ -39,7 +39,7 @@ actionMappings:
 {% if item.args is defined %}
     args:
 {% for item in item.args %}
-    - {{ item.key }}={{ item.value }}
+    - {{ item }}
 {% endfor %}
 {% endif %}
 {% if item.flags is defined %}
