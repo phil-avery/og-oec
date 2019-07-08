@@ -55,10 +55,10 @@ actionMappings:
 {% endfor %}
 {% endif %}
 {% if item.stdout is defined %}
-    stdout:
+    stdout: {{ item.stdout }}
 {% endif %}
 {% if item.stderr is defined %}
-    stderr:
+    stderr: {{ item.stderr }}
 {% endif %}
 {% endfor %}
 pollerConf:
