@@ -1,9 +1,7 @@
 ---
 # handlers file for oec
-- name: reload system daemon
-  shell: systemctl daemon-reload
-  
-- name: restart oec
-  service:
-    name: "{{ oec_svc_name }}"
+- name: restart service oec and issue daemon-reload to pick up config changes
+  systemd:
     state: restarted
+    daemon_reload: yes
+    name: "{{ oec_svc_name }}"
