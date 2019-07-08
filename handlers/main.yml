@@ -1,6 +1,6 @@
 ---
 # handlers file for oec
-- name: restart service oec and issue daemon-reload to pick up config changes
+- name: restart oec
   systemd:
     state: restarted
     daemon_reload: yes
